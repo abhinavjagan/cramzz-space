@@ -1,0 +1,36 @@
+---
+import LogoMark from "./LogoMark.astro";
+import { featuredExperiment } from "../lib/registry";
+
+const pathname = Astro.url.pathname;
+const nav = [
+  { href: "/experiments/", label: "Experiments" },
+  { href: "/ledger/", label: "Open ledger" },
+  { href: "/sponsors/", label: "Sponsor" },
+];
+---
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="/" aria-label="Cramzz home">
+      <LogoMark size={34} />
+      <span>cramzz<span class="brand-dot">.</span>space</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      {nav.map((item) => (
+        <a href={item.href} aria-current={pathname.startsWith(item.href) ? "page" : undefined}>{item.label}</a>
+      ))}
+    </nav>
+
+    {featuredExperiment && <a class="button button-small header-cta" href={featuredExperiment.path}>Play {featuredExperiment.title} <span aria-hidden="true">↗</span></a>}
+
+    <details class="mobile-menu">
+      <summary aria-label="Open navigation"><span></span><span></span><span></span></summary>
+      <nav aria-label="Mobile navigation">
+        {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+        {featuredExperiment && <a href={featuredExperiment.path}>Play {featuredExperiment.title}</a>}
+      </nav>
+    </details>
+  </div>
+</header>

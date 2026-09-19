@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cramzz.space/schemas/experiment.schema.json",
+  "title": "Cramzz experiment manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["slug", "title", "repository", "pinnedCommit", "status", "launchDate", "hypothesis", "sponsorInventory", "analyticsIdentifier"],
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "properties": { "status": { "enum": ["backlog", "building"] } },
+        "required": ["status"]
+      },
+      "then": {
+        "type": "object",
+        "properties": { "launchDate": { "const": null } }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": { "status": { "enum": ["testing", "scaled", "iterating", "retired"] } },
+        "required": ["status"]
+      },
+      "then": {
+        "type": "object",
+        "properties": { "launchDate": { "type": "string", "format": "date" } }
+      }
+    }
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "repository": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/abhinavjagan/" },
+    "pinnedCommit": { "type": "string", "pattern": "^(UNPINNED|[0-9a-f]{40})$" },
+    "status": { "enum": ["backlog", "building", "testing", "scaled", "iterating", "retired"] },
+    "launchDate": { "type": ["string", "null"], "format": "date" },
+    "hypothesis": { "type": "string", "minLength": 20, "maxLength": 500 },
+    "sponsorInventory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "priceInr", "quantity", "status"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "label": { "type": "string", "minLength": 1 },
+          "priceInr": { "type": "integer", "minimum": 0 },
+          "quantity": { "type": "integer", "minimum": 0 },
+          "status": { "enum": ["locked", "available", "sold-out", "retired"] }
+        }
+      }
+    },
+    "analyticsIdentifier": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }
+  }
+}

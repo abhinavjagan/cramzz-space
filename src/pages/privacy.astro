@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Privacy — Cramzz Lab" description="How Cramzz handles analytics, local game progress, sponsor submissions, and payment information.">
+  <header class="page-hero"><div class="shell"><p class="eyebrow">Trust / Privacy</p><h1 class="page-title">Collect less. Explain it plainly.</h1><p class="page-intro">Cramzz experiments do not require an account. We avoid personal data unless you deliberately submit a sponsor brief.</p></div></header>
+  <div class="shell prose-wrap">
+    <aside class="prose-nav"><span>Privacy</span><a href="#analytics">Analytics</a><a href="#local">Local progress</a><a href="#sponsors">Sponsors</a><a href="#payments">Payments</a><a href="#choices">Your choices</a></aside>
+    <article class="prose"><p class="legal-updated">Effective 20 September 2026</p>
+      <section id="overview"><h2>The short version</h2><p>We measure a small set of actions needed to decide whether an experiment is useful. We do not run advertising trackers, build user profiles, sell personal data, or use session replay. Game progress stays in your browser.</p></section>
+      <section id="analytics"><h2>Anonymous product analytics</h2><p>If analytics is enabled, Cramzz sends manually defined events to PostHog, such as an experiment view, game completion, successful share, sponsor-form opening, or payment-return page view. Autocapture and session replay are disabled.</p><p>To count a visitor once across a fourteen-day test, your browser creates a random Cramzz-only identifier. It contains no name, email, device fingerprint, or account information, stays in local storage, and automatically rotates after 30 days. If local storage is blocked, it lasts only for the browser session or current page. Global Privacy Control and Do Not Track disable analytics.</p><p>Event properties are limited to the experiment and puzzle identifiers, broad traffic source or campaign, referrer category, returning-player flag, and non-identifying game results such as outcome, grade, hops, latency, and reliability. We instruct PostHog not to create a person profile or perform geolocation.</p></section>
+      <section id="local"><h2>Progress stored on your device</h2><p>Packet Panic stores completed puzzles, streak state, and preferences in local browser storage. This data is not an account and is not synced to Cramzz. Clear the site’s storage in your browser to remove it.</p></section>
+      <section id="sponsors"><h2>Sponsor submissions</h2><p>If you submit a sponsor brief through Tally, that service receives the information you choose to provide: contact details, brand, destination URL, requested package, and creative. We use it only to evaluate and administer the proposed sponsorship. Rejected briefs are removed when no longer needed; records tied to a transaction may be retained for legal and accounting duties.</p></section>
+      <section id="payments"><h2>Payments</h2><p>Razorpay processes sponsor payments. Cramzz does not receive or store full card or bank credentials. A return to our confirmation page is not proof of payment; capture is verified in Razorpay before a placement is activated. Payment details are not included in product analytics.</p></section>
+      <section id="choices"><h2>Your choices and contact</h2><p>You can use the experiments without an account. Browser privacy controls may block analytics without preventing core gameplay. You may request access to, correction of, or deletion of sponsor-contact information by contacting <a href="https://x.com/AbhinavPolimera">@AbhinavPolimera</a>. Never send payment credentials in a message.</p></section>
+    </article>
+  </div>
+</Layout>

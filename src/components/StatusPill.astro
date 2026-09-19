@@ -1,0 +1,17 @@
+---
+interface Props {
+  status: "backlog" | "building" | "testing" | "scaled" | "iterating" | "retired";
+}
+
+const { status } = Astro.props;
+const labels = {
+  backlog: "Queued",
+  building: "In the lab",
+  testing: "Live test",
+  scaled: "Scaling",
+  iterating: "Iterating",
+  retired: "Retired",
+};
+---
+
+<span class:list={["status-pill", `status-${status}`]}><i></i>{labels[status]}</span>

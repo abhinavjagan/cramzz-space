@@ -1,0 +1,39 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { formatInr, sponsorExperiment } from "../lib/registry";
+import { approvedSponsorFormUrl } from "../lib/sponsorForm";
+
+const approvedFormUrl = approvedSponsorFormUrl(import.meta.env.PUBLIC_SPONSOR_FORM_URL);
+const hasSponsorForm = Boolean(approvedFormUrl);
+const formUrl = approvedFormUrl || "https://x.com/AbhinavPolimera";
+const activeSponsor = sponsorExperiment;
+const benefits = [
+  ["A named or logo router for one 30-day window", "Maximum 7 sponsored routers live at once", "Clearly labelled sponsor treatment", "Post-campaign result summary"],
+  ["Challenge-page credit for one day", "Launch-day social mention", "Completion and share summary"],
+  ["30-day category exclusivity", "Season-level credit and launch mention", "Aggregate campaign summary"],
+];
+---
+
+<Layout title="Sponsor a Cramzz experiment" description="Fund a playful internet experiment and become a clearly labelled part of it—without pop-ups, tracking pixels, or inflated reach promises.">
+  <header class="page-hero sponsor-hero">
+    <div class="shell"><p class="eyebrow">Useful placement, zero interruption</p><h1 class="page-title">Become part of the thing people came to use.</h1><p class="page-intro">Cramzz sponsorships fund experiments directly. Your brand gets a transparent, native role—not a banner pasted over the experience.</p></div>
+  </header>
+  <section class="section package-section">
+    <div class="shell">
+      {activeSponsor ? <Fragment>
+        <div class="section-head"><div><p class="kicker">{activeSponsor.title} inventory</p><h2>Start small. Earn the next unlock.</h2></div><p>Founding Node has 20 total 30-day bookings, with no more than 7 eligible routers sponsored concurrently; later bookings are scheduled into non-overlapping windows. Higher tiers unlock only after real completion thresholds. The first revenue milestone remains five Founding Nodes: ₹2,495 gross.</p></div>
+        <div class="package-grid">
+          {activeSponsor.sponsorInventory.map((item, index) => <article class:list={["package-card", index === 0 && "package-featured"]}><div class="package-top"><span>0{index + 1}</span><span>{item.state}</span></div><h3>{item.name}</h3><strong>{formatInr(item.priceInr)}</strong><p>{item.availability}</p><ul>{benefits[index]?.map((benefit) => <li>{benefit}</li>)}</ul><a class:list={["button", index === 0 ? "button-acid" : "button-ghost"]} href={item.state === "open" ? formUrl : "#unlock-rules"} target={item.state === "open" ? "_blank" : undefined} rel="noreferrer" data-analytics-event={item.state === "open" && hasSponsorForm ? "sponsor_form_opened" : undefined} data-experiment-id={item.state === "open" && hasSponsorForm ? activeSponsor.analyticsId : undefined}>{item.state === "open" ? "Request this placement" : "See unlock rule"}</a></article>)}
+        </div>
+        {!hasSponsorForm && <p class="form-fallback">Sponsor intake form setup is pending. The button opens a direct conversation with <a href="https://x.com/AbhinavPolimera">@AbhinavPolimera</a>; no message is sent automatically.</p>}
+      </Fragment> : <div class="section-head"><div><p class="kicker">Inventory paused</p><h2>No active sponsor placements right now.</h2></div><p>Retired experiments remain public in the ledger, but their inventory closes automatically. New placements appear here only while an eligible experiment is active.</p></div>}
+    </div>
+  </section>
+  <section class="section section-dark sponsor-process" id="unlock-rules">
+    <div class="shell">
+      <div class="section-head"><div><p class="kicker">From brief to live node</p><h2>Human-reviewed at every step.</h2></div><p>A return from checkout is not approval. Creative, link safety, and captured payment are checked before anything appears in an experiment.</p></div>
+      <ol class="process-grid"><li><span>01</span><h3>Send the brief</h3><p>Brand, destination, package, contact details, and a logo under 10 MB.</p></li><li><span>02</span><h3>Safety review</h3><p>We verify the claim, destination, creative, category, and fit.</p></li><li><span>03</span><h3>Pay securely</h3><p>An individual Razorpay Payment Link includes a unique package reference.</p></li><li><span>04</span><h3>Manual activation</h3><p>Placement goes live only after payment is shown as captured.</p></li></ol>
+      <a class="text-link light-link" href="/sponsor-policy/">Read the full sponsor policy <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,59 @@
+services:
+  - type: web
+    name: cramzz-space
+    runtime: static
+    # Render waits for every GitHub check on main before deploying the commit.
+    autoDeployTrigger: checksPass
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: NODE_VERSION
+        value: 22.19.0
+      - key: VENDOR_MODE
+        value: strict
+      - key: PACKET_PANIC_REF
+        sync: false
+      - key: PUBLIC_POSTHOG_KEY
+        sync: false
+      - key: PUBLIC_POSTHOG_HOST
+        value: https://us.i.posthog.com
+      - key: PUBLIC_SPONSOR_FORM_URL
+        sync: false
+    headers:
+      - path: /*
+        name: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://us.i.posthog.com https://eu.i.posthog.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://tally.so https://*.razorpay.com; upgrade-insecure-requests"
+      - path: /*
+        name: Strict-Transport-Security
+        value: "max-age=63072000; includeSubDomains"
+      - path: /*
+        name: Cross-Origin-Opener-Policy
+        value: same-origin
+      - path: /*
+        name: Cross-Origin-Resource-Policy
+        value: same-origin
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Permissions-Policy
+        value: "camera=(), microphone=(), geolocation=(), payment=()"
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /assets/*
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+      - path: /_astro/*
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+      - path: /e/packet-panic/assets/*
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+    routes:
+      - type: redirect
+        source: /home
+        destination: /

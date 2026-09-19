@@ -1,0 +1,32 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import StatusPill from "../../components/StatusPill.astro";
+import { experiments, formatInr, type Experiment } from "../../lib/registry";
+
+export function getStaticPaths() {
+  return experiments.map((experiment) => ({ params: { slug: experiment.slug }, props: { experiment } }));
+}
+
+interface Props { experiment: Experiment }
+const { experiment } = Astro.props;
+---
+
+<Layout title={`${experiment.title} — Experiment brief | Cramzz`} description={experiment.summary}>
+  <header class="page-hero experiment-detail-hero">
+    <div class="shell">
+      <div class="detail-meta"><p class="eyebrow">{experiment.eyebrow}</p><StatusPill status={experiment.status} /></div>
+      <h1 class="page-title">{experiment.title}</h1>
+      <p class="page-intro">{experiment.summary}</p>
+      <div class="detail-actions"><a class="button" href={experiment.path}>Open experiment <span aria-hidden="true">↗</span></a><a class="button button-ghost" href={experiment.repository} rel="noreferrer">View source</a></div>
+    </div>
+  </header>
+  <div class="shell prose-wrap">
+    <aside class="prose-nav"><span>On this page</span><a href="#hypothesis">Hypothesis</a><a href="#rules">Decision rules</a><a href="#inventory">Sponsor inventory</a><a href="#evidence">Evidence</a></aside>
+    <article class="prose">
+      <section id="hypothesis"><p class="kicker">What we believe</p><h2>The hypothesis</h2><p>{experiment.hypothesis}</p></section>
+      <section id="rules"><p class="kicker">Fixed before launch</p><h2>Decision rules</h2><ul><li><strong>Scale:</strong> 300 unique visitors and either 8% sharing, 10% returning players, or one paid sponsor.</li><li><strong>Iterate once:</strong> 100 visitors plus one strong engagement signal or three qualified sponsor replies.</li><li><strong>Stop:</strong> fewer than 100 visitors after the full distribution effort, with no payment and no qualified sponsor interest.</li></ul></section>
+      <section id="inventory"><p class="kicker">Commercial layer</p><h2>Sponsor inventory</h2><div class="compact-packages">{experiment.sponsorInventory.map((item) => <article><div><h3>{item.name}</h3><p>{item.availability}</p></div><strong>{formatInr(item.priceInr)}</strong></article>)}</div><p>Every placement is visibly labelled. Sponsorship never changes the score, blocks the game, or implies a player endorsement.</p></section>
+      <section id="evidence"><p class="kicker">Public record</p><h2>Evidence so far</h2><div class="evidence-grid"><div><strong>{experiment.metrics.visitorsBand}</strong><span>Unique visitors</span></div><div><strong>{experiment.metrics.completedPlays}</strong><span>Completed plays</span></div><div><strong>{formatInr(experiment.metrics.sponsorRevenueInr)}</strong><span>Revenue</span></div><div><strong>{experiment.decision}</strong><span>Decision</span></div></div><p>{experiment.fundedNext}</p><p class="source-note">Source pinned at <code>{experiment.pinnedCommit}</code>. Production rebuilds and verifies this exact commit.</p></section>
+    </article>
+  </div>
+</Layout>

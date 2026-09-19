@@ -1,0 +1,33 @@
+---
+import LogoMark from "./LogoMark.astro";
+---
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <a class="brand" href="/" aria-label="Cramzz home"><LogoMark size={30} /><span>cramzz<span class="brand-dot">.</span>space</span></a>
+      <p class="footer-note">Small internet experiments. Built in public. Judged by evidence.</p>
+    </div>
+    <div class="footer-links" aria-label="Project links">
+      <span>Explore</span>
+      <a href="/experiments/">Experiments</a>
+      <a href="/ledger/">Open ledger</a>
+      <a href="https://github.com/abhinavjagan" rel="me noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="footer-links" aria-label="Company links">
+      <span>Trust</span>
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
+      <a href="/sponsor-policy/">Sponsor policy</a>
+    </div>
+    <div class="footer-links" aria-label="Social links">
+      <span>Follow along</span>
+      <a href="https://x.com/AbhinavPolimera" rel="me noreferrer">@AbhinavPolimera <span aria-hidden="true">↗</span></a>
+      <a href="/sponsors/">Fund an experiment</a>
+    </div>
+  </div>
+  <div class="shell footer-bottom">
+    <span>© {new Date().getFullYear()} Cramzz Lab</span>
+    <span class="live-indicator"><i></i> Zero-spend mode</span>
+  </div>
+</footer>

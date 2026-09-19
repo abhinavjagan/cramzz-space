@@ -1,0 +1,92 @@
+---
+import Layout from "../layouts/Layout.astro";
+import NetworkPreview from "../components/NetworkPreview.astro";
+import ExperimentCard from "../components/ExperimentCard.astro";
+import { featuredExperiment, formatInr, sponsorExperiment } from "../lib/registry";
+
+const featured = featuredExperiment;
+---
+
+<Layout>
+  <section class="hero">
+    <div class="shell hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">An independent internet laboratory</p>
+        <h1 class="display">Small bets.<br /><span>Real signals.</span></h1>
+        <p>We ship useful, playful experiments in three days, test them in public for fourteen, and show you the receipts. No growth theatre. No infinite roadmaps.</p>
+        <div class="hero-actions">
+          {featured
+            ? <a class="button button-acid" href={featured.path}>Play today’s experiment <span aria-hidden="true">↗</span></a>
+            : <a class="button button-acid" href="/experiments/">Browse the experiment archive <span aria-hidden="true">→</span></a>}
+          <a class="button button-light" href="/ledger/">See the open ledger</a>
+        </div>
+        <div class="hero-proof" aria-label="How Cramzz operates">
+          <span><strong>≤ 3 days</strong> to build</span><i></i>
+          <span><strong>14 days</strong> to prove it</span><i></i>
+          <span><strong>₹0</strong> paid acquisition</span>
+        </div>
+      </div>
+      <NetworkPreview />
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Build in public</span><span>Measure real behavior</span><span>Fund what works</span><span>Archive what doesn’t</span><span>Build in public</span><span>Measure real behavior</span><span>Fund what works</span><span>Archive what doesn’t</span>
+    </div>
+  </div>
+
+  <section class="section" aria-labelledby="current-experiment">
+    <div class="shell">
+      <div class="section-head">
+        <div><p class="kicker">On the workbench</p><h2 id="current-experiment">One live question at a time.</h2></div>
+        <p>Every experiment starts with a falsifiable hypothesis and ends with a public decision: scale, iterate once, or stop.</p>
+      </div>
+      {featured
+        ? <ExperimentCard experiment={featured} />
+        : <p class="page-intro">No experiment is active right now. Completed work and decisions remain available in the open ledger.</p>}
+    </div>
+  </section>
+
+  <section class="section section-dark" aria-labelledby="operating-system">
+    <div class="shell">
+      <div class="section-head">
+        <div><p class="kicker">The operating system</p><h2 id="operating-system">Curiosity with constraints.</h2></div>
+        <p>Constraints keep the work honest. A good idea should survive without a giant budget, a captive audience, or months of polishing.</p>
+      </div>
+      <div class="principles-grid">
+        <article class="principle"><span>01 / SHIP</span><h3>Three days, maximum.</h3><p>Build only the smallest complete loop. If the idea needs a quarter to become interesting, it is not this experiment.</p></article>
+        <article class="principle"><span>02 / LISTEN</span><h3>Behavior beats applause.</h3><p>Visits, completions, returns, shares, and paid sponsor interest decide what happens next—not likes or optimistic anecdotes.</p></article>
+        <article class="principle"><span>03 / DECIDE</span><h3>No zombie projects.</h3><p>After fourteen days we scale, change one major variable, or publish the lesson and move on.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-acid" aria-labelledby="public-ledger">
+    <div class="shell ledger-preview">
+      <div>
+        <p class="kicker">Nothing up our sleeve</p>
+        <h2 id="public-ledger">The ledger stays open.</h2>
+        <p>Traffic bands, completion counts, sponsor revenue, and the eventual decision live here. A failed experiment is useful evidence—not a page to quietly delete.</p>
+        <a class="button button-ghost" href="/ledger/">Inspect every result <span aria-hidden="true">→</span></a>
+      </div>
+      {featured && <div class="scorecard" aria-label={`${featured.title} scorecard`}>
+        <div class="scorecard-head"><span>{featured.eyebrow}</span><span>{featured.metrics.visitorsBand}</span></div>
+        <div class="scorecard-grid">
+          <div><strong>{featured.metrics.completedPlays}</strong><span>Completed plays</span></div>
+          <div><strong>{formatInr(featured.metrics.sponsorRevenueInr)}</strong><span>Sponsor revenue</span></div>
+          <div><strong>{featured.metrics.shareRate === null ? "—" : `${featured.metrics.shareRate}%`}</strong><span>Share rate</span></div>
+          <div><strong>{featured.decision}</strong><span>Decision</span></div>
+        </div>
+        <div class="scorecard-foot">NEXT REVIEW / 14 DAYS AFTER LAUNCH</div>
+      </div>}
+    </div>
+  </section>
+
+  {sponsorExperiment && <section class="section sponsor-strip">
+    <div class="shell sponsor-strip-inner">
+      <div><p class="eyebrow">For curious brands</p><h2>Sponsor an object,<br />not an interruption.</h2></div>
+      <div><p>Fund an experiment and become a clearly labelled part of it. No pop-ups, dark patterns, inflated impression promises, or pay-to-win mechanics.</p><a class="button button-acid" href="/sponsors/" data-analytics-event="sponsor_cta_clicked" data-experiment-id={sponsorExperiment.analyticsId}>See sponsor inventory <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </section>}
+</Layout>

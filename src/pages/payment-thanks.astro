@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { sponsorExperiment } from "../lib/registry";
+---
+
+<Layout title="Payment return received — Cramzz Lab" description="Your return from Razorpay was received. A Cramzz placement is activated only after manual payment and creative verification." noindex>
+  <section class="confirmation-page" data-payment-experiment-id={sponsorExperiment?.analyticsId}>
+    <div class="confirmation-card">
+      <div class="confirmation-icon" aria-hidden="true">✓</div>
+      <p class="eyebrow">Return received</p>
+      <h1>Thanks. We’ll verify it from here.</h1>
+      <p>Returning to this page does not confirm payment. We will check that Razorpay shows the payment as captured, match it to the approved brief, and contact you before any placement goes live.</p>
+      <div class="callout"><strong>Never received an approval email?</strong><br />Do not retry payment yet. Contact <a href="https://x.com/AbhinavPolimera">@AbhinavPolimera</a> with the sponsor name and package—never send card or bank details.</div>
+      <a class="button" href="/">Return to Cramzz Lab</a>
+    </div>
+  </section>
+  <script>
+    const experimentId = document.querySelector<HTMLElement>("[data-payment-experiment-id]")?.dataset.paymentExperimentId;
+    const reportPaymentReturn = () => {
+      if (experimentId) window.cramzzAnalytics?.track("payment_returned", { experiment_id: experimentId });
+    };
+    if (experimentId && window.cramzzAnalytics) reportPaymentReturn();
+    else if (experimentId) window.addEventListener("cramzz:analytics-ready", reportPaymentReturn, { once: true });
+  </script>
+</Layout>

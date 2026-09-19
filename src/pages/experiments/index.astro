@@ -1,0 +1,23 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ExperimentCard from "../../components/ExperimentCard.astro";
+import { activeExperiments } from "../../lib/registry";
+---
+
+<Layout title="Experiments — Cramzz Lab" description="Every Cramzz experiment: what we are building, the hypothesis behind it, and the evidence that decides its future.">
+  <header class="page-hero">
+    <div class="shell"><p class="eyebrow">The laboratory</p><h1 class="page-title">Experiments should earn their right to exist.</h1><p class="page-intro">One build at a time, two live tests at most, and a public verdict after fourteen days.</p></div>
+  </header>
+  <section class="section">
+    <div class="shell experiment-list">
+      {activeExperiments.map((experiment) => <ExperimentCard experiment={experiment} />)}
+      {activeExperiments.length === 0 && <p class="page-intro">No experiment is active right now. Completed experiments remain available through the <a href="/ledger/">open ledger</a>.</p>}
+      <div class="next-up-card">
+        <p class="kicker">Next in the queue</p>
+        <h2>The Internet Builds the Machine</h2>
+        <p>Visitors choose the next module in a digital chain reaction. A physical version happens only if sponsor revenue pays for every part.</p>
+        <span>Waiting for Experiment 001 evidence</span>
+      </div>
+    </div>
+  </section>
+</Layout>

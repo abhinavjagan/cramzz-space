@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "packet-panic",
+    "title": "Packet Panic",
+    "eyebrow": "Experiment 001 · Daily network puzzle",
+    "summary": "Route one packet through a tiny, hostile network before its TTL runs out.",
+    "hypothesis": "A fast daily routing puzzle can turn infrastructure knowledge into a shareable habit and create useful, non-obstructive sponsor inventory.",
+    "repository": "https://github.com/abhinavjagan/cramzz-exp-packet-panic",
+    "pinnedCommit": "16d1386fb2b10a6f16bce72f5d10495db7abc1ae",
+    "status": "building",
+    "launchDate": null,
+    "evaluationEnds": null,
+    "path": "/e/packet-panic/",
+    "analyticsId": "packet-panic-v1",
+    "artifact": {
+      "localDirectory": "../cramzz-exp-packet-panic",
+      "packageManager": "npm",
+      "pinEnvironment": "PACKET_PANIC_REF",
+      "installCommand": ["npm", "ci"],
+      "verifyCommand": ["npm", "run", "check"],
+      "buildCommand": ["npm", "run", "build"],
+      "outputDirectory": "dist",
+      "basePath": "/e/packet-panic/"
+    },
+    "sponsorInventory": [
+      {
+        "id": "founding-node",
+        "name": "Founding Node",
+        "priceInr": 499,
+        "availability": "20 bookings total · max 7 concurrent",
+        "state": "open"
+      },
+      {
+        "id": "daily-challenge",
+        "name": "Daily Challenge Sponsor",
+        "priceInr": 1999,
+        "availability": "Unlocks at 250 completed plays",
+        "state": "locked"
+      },
+      {
+        "id": "season",
+        "name": "Season Sponsor",
+        "priceInr": 9999,
+        "availability": "Unlocks at 1,000 completed plays",
+        "state": "locked"
+      }
+    ],
+    "metrics": {
+      "visitorsBand": "Pre-launch",
+      "completedPlays": 0,
+      "shareRate": null,
+      "returnRate": null,
+      "sponsorRevenueInr": 0
+    },
+    "decision": "pending",
+    "fundedNext": "Nothing yet — the experiment launches at zero cost."
+  }
+]

@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cramzz.space/schemas/scorecard.schema.json",
+  "title": "Cramzz day-14 scorecard",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["experiment", "launchDate", "decisionDate", "distribution", "metrics", "strongEngagementSignal", "strongEngagementEvidence", "recordedDecision"],
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "metrics": {
+            "type": "object",
+            "properties": { "paidSponsors": { "type": "integer", "const": 0 } },
+            "required": ["paidSponsors"]
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "metrics": {
+            "type": "object",
+            "properties": { "capturedGrossInr": { "type": "integer", "const": 0 } }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "metrics": {
+            "type": "object",
+            "properties": { "paidSponsors": { "type": "integer", "minimum": 1 } },
+            "required": ["paidSponsors"]
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "metrics": {
+            "type": "object",
+            "properties": { "capturedGrossInr": { "type": "integer", "minimum": 1 } }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": { "strongEngagementSignal": { "type": "boolean", "const": true } },
+        "required": ["strongEngagementSignal"]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "strongEngagementEvidence": { "type": "string", "minLength": 20, "maxLength": 500 }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": { "strongEngagementSignal": { "type": "boolean", "const": false } },
+        "required": ["strongEngagementSignal"]
+      },
+      "then": {
+        "type": "object",
+        "properties": { "strongEngagementEvidence": { "const": null } }
+      }
+    }
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "experiment": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "launchDate": { "type": "string", "format": "date" },
+    "decisionDate": { "type": "string", "format": "date" },
+    "distribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["originalPosts", "relevantReplies", "sponsorApproachesSent"],
+      "properties": {
+        "originalPosts": { "type": "integer", "minimum": 0 },
+        "relevantReplies": { "type": "integer", "minimum": 0 },
+        "sponsorApproachesSent": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uniqueVisitors", "completions", "shares", "returningPlayers", "qualifiedSponsorReplies", "paidSponsors", "capturedGrossInr"],
+      "properties": {
+        "uniqueVisitors": { "type": "integer", "minimum": 0 },
+        "completions": { "type": "integer", "minimum": 0 },
+        "shares": { "type": "integer", "minimum": 0 },
+        "returningPlayers": { "type": "integer", "minimum": 0 },
+        "qualifiedSponsorReplies": { "type": "integer", "minimum": 0 },
+        "paidSponsors": { "type": "integer", "minimum": 0 },
+        "capturedGrossInr": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "strongEngagementSignal": { "type": "boolean" },
+    "strongEngagementEvidence": {
+      "type": ["string", "null"],
+      "minLength": 20,
+      "maxLength": 500
+    },
+    "recordedDecision": { "enum": ["pending", "scale", "iterate-once", "kill", "insufficient-evidence"] }
+  }
+}

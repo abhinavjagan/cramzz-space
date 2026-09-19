@@ -1,0 +1,37 @@
+{
+  "$schema": "https://cramzz.space/schemas/analytics-contract.schema.json",
+  "version": 1,
+  "contractId": "cramzz-public-analytics-v1",
+  "events": [
+    "experiment_view",
+    "game_start",
+    "game_complete",
+    "share_opened",
+    "share_completed",
+    "challenge_visit",
+    "sponsor_cta_clicked",
+    "sponsor_form_opened",
+    "payment_returned"
+  ],
+  "properties": {
+    "experiment_id": { "type": "token", "maxLength": 64, "pattern": "^[A-Za-z0-9._-]+$" },
+    "puzzle_id": { "type": "token", "maxLength": 64, "pattern": "^[A-Za-z0-9._-]+$" },
+    "source": { "type": "token", "maxLength": 64, "pattern": "^[A-Za-z0-9._-]+$" },
+    "campaign": { "type": "token", "maxLength": 64, "pattern": "^[A-Za-z0-9._-]+$" },
+    "referrer_class": { "type": "enum", "values": ["direct", "internal", "search", "social", "referral"] },
+    "returning_player": { "type": "boolean" },
+    "outcome": { "type": "enum", "values": ["delivered", "dropped"] },
+    "latency_ms": { "type": "number", "minimum": 0, "maximum": 10000 },
+    "reliability_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+    "hops": { "type": "integer", "minimum": 0, "maximum": 6 },
+    "grade": { "type": "enum", "values": ["S", "A", "B", "C", "D"] }
+  },
+  "privacy": {
+    "autocapture": false,
+    "sessionReplay": false,
+    "personProfiles": false,
+    "geoipEnrichment": false,
+    "freeFormText": false,
+    "acceptUnknownProperties": false
+  }
+}

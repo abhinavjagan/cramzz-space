@@ -1,0 +1,77 @@
+name: Verify hub
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hub-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analytics-contract:
+    uses: abhinavjagan/cramzz-workflows/.github/workflows/analytics-contract.yml@24c00b5fff8727ddc5020218243c6de0c768690f
+    with:
+      contract_path: analytics-contract.json
+      workflows_ref: 24c00b5fff8727ddc5020218243c6de0c768690f
+    permissions:
+      contents: read
+
+  secrets:
+    uses: abhinavjagan/cramzz-workflows/.github/workflows/secret-scan.yml@24c00b5fff8727ddc5020218243c6de0c768690f
+    permissions:
+      contents: read
+
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      - run: npm run scan:secrets
+      - name: Build hub shell
+        run: npm run build:hub
+      - name: Vendor pinned experiments on main
+        if: github.ref == 'refs/heads/main'
+        env:
+          VENDOR_MODE: strict
+          PACKET_PANIC_REF: ${{ vars.PACKET_PANIC_REF }}
+        run: npm run vendor:experiments
+      - name: Keep launch-soon page in pull requests
+        if: github.ref != 'refs/heads/main'
+        env:
+          VENDOR_MODE: optional
+        run: npm run vendor:experiments
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: cramzz-site
+          path: dist
+          if-no-files-found: error
+
+  browser-smoke:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: cramzz-site
+          path: dist
+      - run: npx playwright install --with-deps
+      - run: npx playwright test

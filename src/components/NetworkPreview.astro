@@ -1,0 +1,29 @@
+<div class="network-preview" aria-label="Stylized preview of a network routing puzzle" role="img">
+  <div class="preview-topbar">
+    <span><i></i> PACKET PANIC</span>
+    <strong>TTL 04</strong>
+  </div>
+  <svg viewBox="0 0 620 360" aria-hidden="true">
+    <defs>
+      <linearGradient id="routeGlow" x1="0" x2="1">
+        <stop offset="0" stop-color="#d9ff57" />
+        <stop offset="1" stop-color="#72ebd2" />
+      </linearGradient>
+      <filter id="glow"><feGaussianBlur stdDeviation="4" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+    </defs>
+    <g class="faint-lines" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M80 180 210 85 340 145 465 70 555 175" />
+      <path d="M80 180 215 265 340 145 455 285 555 175" />
+      <path d="M210 85 215 265M465 70 455 285" />
+    </g>
+    <path d="M80 180 210 85 340 145 455 285 555 175" fill="none" stroke="url(#routeGlow)" stroke-width="5" stroke-linecap="round" stroke-dasharray="7 10" filter="url(#glow)" />
+    <g class="node idle"><circle cx="215" cy="265" r="24" /><text x="215" y="271">?</text></g>
+    <g class="node congested"><circle cx="465" cy="70" r="24" /><text x="465" y="76">!</text></g>
+    <g class="node active"><circle cx="210" cy="85" r="27" /><text x="210" y="91">A</text></g>
+    <g class="node active"><circle cx="340" cy="145" r="27" /><text x="340" y="151">B</text></g>
+    <g class="node active"><circle cx="455" cy="285" r="27" /><text x="455" y="291">C</text></g>
+    <g class="node source"><circle cx="80" cy="180" r="32" /><text x="80" y="186">S</text></g>
+    <g class="node target"><circle cx="555" cy="175" r="32" /><text x="555" y="181">D</text></g>
+  </svg>
+  <div class="preview-readout"><span>LATENCY <b>42ms</b></span><span>RELIABILITY <b>96%</b></span><span>HOPS <b>4/6</b></span></div>
+</div>

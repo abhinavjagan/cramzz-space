@@ -1,0 +1,66 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = "Cramzz Lab — Small internet experiments",
+  description = "Small, useful and slightly strange internet experiments—built in public, tested for fourteen days, and judged by evidence.",
+  image = "/og-default.png",
+  noindex = false,
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(image, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#08120f" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cramzz Lab" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cramzz Lab — Small bets. Real signals." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@AbhinavPolimera" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content="Cramzz Lab — Small bets. Real signals." />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="site-noise" aria-hidden="true"></div>
+    <Header />
+    <main id="main-content"><slot /></main>
+    <Footer />
+    <script>
+      import { installAnalytics } from "../lib/analytics";
+      installAnalytics(
+        import.meta.env.PUBLIC_POSTHOG_KEY ?? "",
+        import.meta.env.PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com",
+      );
+    </script>
+  </body>
+</html>

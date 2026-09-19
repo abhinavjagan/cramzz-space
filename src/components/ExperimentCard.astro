@@ -1,0 +1,27 @@
+---
+import type { Experiment } from "../lib/registry";
+import StatusPill from "./StatusPill.astro";
+
+interface Props {
+  experiment: Experiment;
+}
+
+const { experiment } = Astro.props;
+---
+
+<article class="experiment-card">
+  <div class="experiment-visual" aria-hidden="true">
+    <span class="visual-packet">●</span>
+    <i></i><i></i><i></i><i></i>
+    <b>TTL 06</b>
+  </div>
+  <div class="experiment-card-body">
+    <div class="card-meta"><span>{experiment.eyebrow}</span><StatusPill status={experiment.status} /></div>
+    <h3>{experiment.title}</h3>
+    <p>{experiment.summary}</p>
+    <div class="card-actions">
+      <a class="text-link" href={experiment.path}>Open experiment <span aria-hidden="true">↗</span></a>
+      <a class="muted-link" href={`/experiments/${experiment.slug}/`}>Read the brief</a>
+    </div>
+  </div>
+</article>

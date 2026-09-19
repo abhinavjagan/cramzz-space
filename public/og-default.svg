@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#07110e"/>
+  <g opacity=".12" stroke="#f2f1e8"><path d="M0 70h1200M0 140h1200M0 210h1200M0 280h1200M0 350h1200M0 420h1200M0 490h1200M0 560h1200"/><path d="M70 0v630M140 0v630M210 0v630M280 0v630M350 0v630M420 0v630M490 0v630M560 0v630M630 0v630M700 0v630M770 0v630M840 0v630M910 0v630M980 0v630M1050 0v630M1120 0v630"/></g>
+  <rect x="70" y="62" width="50" height="50" rx="14" fill="#d9ff57"/>
+  <path d="M104 77a14 14 0 1 0 0 20" fill="none" stroke="#07110e" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="107" cy="77" r="3" fill="#ff6f3d"/><circle cx="107" cy="97" r="3" fill="#ff6f3d"/>
+  <text x="136" y="99" fill="#f2f1e8" font-family="Arial,sans-serif" font-size="30" font-weight="700">cramzz<tspan fill="#ff6f3d">.</tspan>space</text>
+  <text x="70" y="278" fill="#f2f1e8" font-family="Arial,sans-serif" font-size="88" font-weight="700" letter-spacing="-5">Small bets.</text>
+  <text x="70" y="372" fill="#d9ff57" font-family="Arial,sans-serif" font-size="88" font-weight="700" letter-spacing="-5">Real signals.</text>
+  <text x="74" y="456" fill="#9eaa9f" font-family="monospace" font-size="20">BUILD IN PUBLIC  /  14-DAY TESTS  /  ₹0 PAID ACQUISITION</text>
+  <path d="M870 236l92-66 90 48 74-78" fill="none" stroke="#72ebd2" stroke-width="5" stroke-dasharray="8 10"/>
+  <circle cx="870" cy="236" r="20" fill="#d9ff57"/><circle cx="962" cy="170" r="16" fill="#07110e" stroke="#d9ff57" stroke-width="4"/><circle cx="1052" cy="218" r="16" fill="#07110e" stroke="#d9ff57" stroke-width="4"/><circle cx="1126" cy="140" r="20" fill="#72ebd2"/>
+</svg>

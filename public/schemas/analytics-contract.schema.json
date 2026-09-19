@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cramzz.space/schemas/analytics-contract.schema.json",
+  "title": "Cramzz anonymous analytics contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "version", "contractId", "events", "properties", "privacy"],
+  "properties": {
+    "$schema": { "const": "https://cramzz.space/schemas/analytics-contract.schema.json" },
+    "version": { "const": 1 },
+    "contractId": { "const": "cramzz-public-analytics-v1" },
+    "events": {
+      "const": [
+        "experiment_view",
+        "game_start",
+        "game_complete",
+        "share_opened",
+        "share_completed",
+        "challenge_visit",
+        "sponsor_cta_clicked",
+        "sponsor_form_opened",
+        "payment_returned"
+      ]
+    },
+    "properties": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment_id",
+        "puzzle_id",
+        "source",
+        "campaign",
+        "referrer_class",
+        "returning_player",
+        "outcome",
+        "latency_ms",
+        "reliability_pct",
+        "hops",
+        "grade"
+      ],
+      "properties": {
+        "experiment_id": { "const": { "type": "token", "maxLength": 64, "pattern": "^[A-Za-z0-9._-]+$" } },
+        "puzzle_id": { "const": { "type": "token", "maxLength": 64, "pattern": "^[A-Za-z0-9._-]+$" } },
+        "source": { "const": { "type": "token", "maxLength": 64, "pattern": "^[A-Za-z0-9._-]+$" } },
+        "campaign": { "const": { "type": "token", "maxLength": 64, "pattern": "^[A-Za-z0-9._-]+$" } },
+        "referrer_class": { "const": { "type": "enum", "values": ["direct", "internal", "search", "social", "referral"] } },
+        "returning_player": { "const": { "type": "boolean" } },
+        "outcome": { "const": { "type": "enum", "values": ["delivered", "dropped"] } },
+        "latency_ms": { "const": { "type": "number", "minimum": 0, "maximum": 10000 } },
+        "reliability_pct": { "const": { "type": "number", "minimum": 0, "maximum": 100 } },
+        "hops": { "const": { "type": "integer", "minimum": 0, "maximum": 6 } },
+        "grade": { "const": { "type": "enum", "values": ["S", "A", "B", "C", "D"] } }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["autocapture", "sessionReplay", "personProfiles", "geoipEnrichment", "freeFormText", "acceptUnknownProperties"],
+      "properties": {
+        "autocapture": { "const": false },
+        "sessionReplay": { "const": false },
+        "personProfiles": { "const": false },
+        "geoipEnrichment": { "const": false },
+        "freeFormText": { "const": false },
+        "acceptUnknownProperties": { "const": false }
+      }
+    }
+  }
+}
