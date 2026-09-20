@@ -14,15 +14,15 @@ concurrency:
 
 jobs:
   analytics-contract:
-    uses: abhinavjagan/cramzz-workflows/.github/workflows/analytics-contract.yml@24c00b5fff8727ddc5020218243c6de0c768690f
+    uses: abhinavjagan/cramzz-workflows/.github/workflows/analytics-contract.yml@ee61fa28655e7e41c694dd13629c0278b15beca9
     with:
       contract_path: analytics-contract.json
-      workflows_ref: 24c00b5fff8727ddc5020218243c6de0c768690f
+      workflows_ref: ee61fa28655e7e41c694dd13629c0278b15beca9
     permissions:
       contents: read
 
   secrets:
-    uses: abhinavjagan/cramzz-workflows/.github/workflows/secret-scan.yml@24c00b5fff8727ddc5020218243c6de0c768690f
+    uses: abhinavjagan/cramzz-workflows/.github/workflows/secret-scan.yml@ee61fa28655e7e41c694dd13629c0278b15beca9
     permissions:
       contents: read
 
