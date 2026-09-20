@@ -23,7 +23,7 @@ Every item in `src/data/experiments.json` owns a URL `/e/<slug>/` and declares:
 
 Packet Panic must build with `VITE_BASE_PATH=/e/packet-panic/` and emit both `dist/index.html` and `dist/experiment.json`. In strict mode the vendor script requires the registry pin and `PACKET_PANIC_REF` to be the same full SHA, verifies that commit is in `origin/main`, passes it as `EXPERIMENT_SOURCE_COMMIT`, runs `npm ci` plus the declared `verifyCommand`, and verifies the built manifest contains that same SHA before replacing the hub fallback. No floating or unreviewed ref is accepted. Repository branch protection is expected to require the Packet Panic CI check before `main` can advance.
 
-Before the first production build, set the registry pin plus `PACKET_PANIC_REF` in GitHub repository variables and Render. Keep `VENDOR_MODE=strict` in production.
+Before the first production build, set the registry pin plus `PACKET_PANIC_REF` in GitHub repository variables and Render. Keep `VENDOR_MODE=strict` in production. At cutover, set `REQUIRE_LAUNCH_DATE=true` on the live Render service only after the registry and pinned experiment both record the real launch date; this makes a production rebuild fail closed if either artifact is still in preview mode.
 
 ## Configuration
 

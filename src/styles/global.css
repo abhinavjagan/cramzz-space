@@ -167,7 +167,7 @@ button, input, textarea, select { font: inherit; }
 .ledger-summary span { display: block; color: var(--muted-dark); font: .65rem var(--mono); text-transform: uppercase; }
 .ledger-summary strong { display: block; margin-top: 10px; font-size: 1.8rem; letter-spacing: -.05em; }
 .ledger-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-bright); }
-.ledger-table { width: 100%; min-width: 820px; border-collapse: collapse; text-align: left; }
+.ledger-table { width: 100%; min-width: 1040px; border-collapse: collapse; text-align: left; }
 .ledger-table th { padding: 16px 20px; color: var(--muted-dark); background: rgba(7,17,14,.035); border-bottom: 1px solid var(--line); font: 500 .62rem var(--mono); text-transform: uppercase; letter-spacing: .06em; }
 .ledger-table td { padding: 22px 20px; border-bottom: 1px solid var(--line); font-size: .86rem; }
 .ledger-table tbody tr:last-child td { border-bottom: 0; }

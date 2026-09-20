@@ -110,6 +110,19 @@ describe("experiment registry", () => {
     expect(vendorScript).toContain("CRAMZZ_BASE_PATH: artifact.basePath");
   });
 
+  it("keeps production deployments closed until launch dates are configured", () => {
+    const renderConfig = readFileSync(resolve("render.yaml"), "utf8");
+    expect(renderConfig).toMatch(/key:\s*REQUIRE_LAUNCH_DATE\s*\n\s*value:\s*["']?true["']?/);
+  });
+
+  it("derives the public ledger counters and publishes what revenue funded next", () => {
+    const ledgerPage = readFileSync(resolve("src/pages/ledger.astro"), "utf8");
+    expect(ledgerPage).toContain('item.status === "building"');
+    expect(ledgerPage).not.toContain("<strong>01</strong>");
+    expect(ledgerPage).toContain("What it funded next");
+    expect(ledgerPage).toContain("experiment.fundedNext");
+  });
+
   it("keeps experiment and artifact base paths identical", () => {
     for (const experiment of experiments) {
       expect(experiment.artifact.basePath).toBe(experiment.path);

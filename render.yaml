@@ -11,6 +11,9 @@ services:
         value: 22.19.0
       - key: VENDOR_MODE
         value: strict
+      # Production must fail closed if an experiment still has preview dates.
+      - key: REQUIRE_LAUNCH_DATE
+        value: "true"
       - key: PACKET_PANIC_REF
         sync: false
       - key: PUBLIC_POSTHOG_KEY
