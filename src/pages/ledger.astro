@@ -2,6 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 import StatusPill from "../components/StatusPill.astro";
 import { experiments, formatInr } from "../lib/registry";
+
+const buildsInProgress = experiments.filter((item) => item.status === "building").length;
 ---
 
 <Layout title="Open experiment ledger — Cramzz Lab" description="The public evidence behind every Cramzz experiment: traffic, engagement, sponsor revenue, and the final decision.">
@@ -10,11 +12,11 @@ import { experiments, formatInr } from "../lib/registry";
   </header>
   <section class="section ledger-section">
     <div class="shell">
-      <div class="ledger-summary"><div><span>Experiments launched</span><strong>{experiments.filter((item) => item.launchDate).length}</strong></div><div><span>Sponsor revenue</span><strong>{formatInr(experiments.reduce((sum, item) => sum + item.metrics.sponsorRevenueInr, 0))}</strong></div><div><span>Paid acquisition</span><strong>{formatInr(0)}</strong></div><div><span>Current build</span><strong>01</strong></div></div>
+      <div class="ledger-summary"><div><span>Experiments launched</span><strong>{experiments.filter((item) => item.launchDate).length}</strong></div><div><span>Sponsor revenue</span><strong>{formatInr(experiments.reduce((sum, item) => sum + item.metrics.sponsorRevenueInr, 0))}</strong></div><div><span>Paid acquisition</span><strong>{formatInr(0)}</strong></div><div><span>Currently building</span><strong>{buildsInProgress}</strong></div></div>
       <div class="ledger-table-wrap">
         <table class="ledger-table">
-          <thead><tr><th>Experiment</th><th>Status</th><th>Visitors</th><th>Completions</th><th>Revenue</th><th>Decision</th></tr></thead>
-          <tbody>{experiments.map((experiment) => <tr><td><a href={`/experiments/${experiment.slug}/`}><strong>{experiment.title}</strong><span>{experiment.launchDate ?? "Launch date pending"}</span></a></td><td><StatusPill status={experiment.status} /></td><td>{experiment.metrics.visitorsBand}</td><td>{experiment.metrics.completedPlays}</td><td>{formatInr(experiment.metrics.sponsorRevenueInr)}</td><td class="decision-cell">{experiment.decision}</td></tr>)}</tbody>
+          <thead><tr><th>Experiment</th><th>Status</th><th>Visitors</th><th>Completions</th><th>Revenue</th><th>Decision</th><th>What it funded next</th></tr></thead>
+          <tbody>{experiments.map((experiment) => <tr><td><a href={`/experiments/${experiment.slug}/`}><strong>{experiment.title}</strong><span>{experiment.launchDate ?? "Launch date pending"}</span></a></td><td><StatusPill status={experiment.status} /></td><td>{experiment.metrics.visitorsBand}</td><td>{experiment.metrics.completedPlays}</td><td>{formatInr(experiment.metrics.sponsorRevenueInr)}</td><td class="decision-cell">{experiment.decision}</td><td>{experiment.fundedNext}</td></tr>)}</tbody>
         </table>
       </div>
       <div class="method-note"><div><span>METHOD / 001</span><h2>What counts as evidence?</h2></div><p>Qualified visits exclude obvious bots and our own testing. Sponsor revenue is counted only after payment is captured. A share is recorded only after the native share sheet or copy action succeeds. We publish ranges where an exact count could make individual behavior identifiable.</p></div>
