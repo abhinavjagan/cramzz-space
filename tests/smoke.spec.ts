@@ -10,17 +10,23 @@ test("home exposes the flagship and trust navigation", async ({ page }) => {
   await expect(page.getByRole("link", { name: "Privacy" })).toBeVisible();
 });
 
-test("only an available sponsor form is tagged as opened", async ({ page }) => {
+test("sponsor-form analytics match the configured destination", async ({ page }) => {
   await page.goto("/sponsors/");
   for (const link of await page.getByRole("link", { name: "See unlock rule" }).all()) {
     await expect(link).not.toHaveAttribute("data-analytics-event", "sponsor_form_opened");
   }
-  // Local/PR builds intentionally have no sponsor form URL and must not count
-  // the fallback X conversation as a form opening.
-  await expect(page.getByRole("link", { name: "Request this placement" })).not.toHaveAttribute(
-    "data-analytics-event",
-    "sponsor_form_opened",
-  );
+
+  const requestLink = page.getByRole("link", { name: "Request this placement" });
+  const destination = await requestLink.getAttribute("href");
+  if (destination?.startsWith("https://tally.so/")) {
+    await expect(requestLink).toHaveAttribute("data-analytics-event", "sponsor_form_opened");
+    await expect(requestLink).toHaveAttribute("target", "_blank");
+    await expect(requestLink).toHaveAttribute("rel", "noreferrer");
+  } else {
+    // Local/PR builds intentionally have no sponsor form URL and must not count
+    // the fallback X conversation as a form opening.
+    await expect(requestLink).not.toHaveAttribute("data-analytics-event", "sponsor_form_opened");
+  }
 });
 
 test("ledger and policy pages render", async ({ page }) => {

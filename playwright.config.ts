@@ -1,12 +1,16 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const remoteBaseUrl = process.env.PLAYWRIGHT_TEST_BASE_URL;
+
 export default defineConfig({
   testDir: "./tests",
   testMatch: "**/*.spec.ts",
   fullyParallel: true,
   reporter: "list",
-  use: { baseURL: "http://127.0.0.1:4321", trace: "retain-on-failure" },
-  webServer: { command: "npm run preview:e2e", port: 4321, reuseExistingServer: !process.env.CI },
+  use: { baseURL: remoteBaseUrl ?? "http://127.0.0.1:4321", trace: "retain-on-failure" },
+  webServer: remoteBaseUrl
+    ? undefined
+    : { command: "npm run preview:e2e", port: 4321, reuseExistingServer: !process.env.CI },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
     { name: "firefox", use: { ...devices["Desktop Firefox"] } },
