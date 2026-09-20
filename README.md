@@ -39,4 +39,11 @@ Copy `.env.example` locally when needed. Public PostHog and Tally values are saf
 - `npm run test:e2e` — Playwright smoke suite across desktop and mobile engines
 - `npm run scan:secrets` — deterministic repository secret-pattern check
 
+Run the same five-browser acceptance suite against an already deployed artifact
+by setting its origin explicitly. This skips the local preview server:
+
+```sh
+PLAYWRIGHT_TEST_BASE_URL=https://cramzz-space.onrender.com npm run test:e2e
+```
+
 Deployment and domain migration steps are in [`docs/ROLLBACK.md`](docs/ROLLBACK.md).
